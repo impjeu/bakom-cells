@@ -1,7 +1,12 @@
 name: Download BAKOM Data
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Allows manual triggering via GitHub UI
+  schedule:
+    - cron: '0 0 1 * *'  # Runs at 00:00 UTC on the 1st of every month
+
+permissions:
+  contents: write  # Grants write access for pushing changes
 
 jobs:
   download:
