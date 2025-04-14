@@ -1,10 +1,9 @@
 name: Download BAKOM Data
   # You may pin to the exact commit or the version.
-  # uses: wow-actions/download-upload@bc8411c3dfcb62fee64632638e109283203abbda
-  uses: wow-actions/download-upload@v1.1.0
+  uses: wow-actions/download-upload@bc8411c3dfcb62fee64632638e109283203abbda
   with:
     # Your GitHub token for authentication.
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    GITHUB_TOKEN: ${{ secrets.GHAPI }}
     # The file url to download
     url: https://data.geo.admin.ch/ch.bakom.standorte-mobilfunkanlagen/standorte-mobilfunkanlagen/standorte-mobilfunkanlagen_2056.json
     # The file name to save
