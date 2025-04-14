@@ -1,12 +1,29 @@
 name: Download BAKOM Data
-  uses: wow-actions/download-upload@bc8411c3dfcb62fee64632638e109283203abbda
-  with:
-    GITHUB_TOKEN: ${{ secrets.GHAPI }}
-    # The file url to download
-    url: https://data.geo.admin.ch/ch.bakom.standorte-mobilfunkanlagen/standorte-mobilfunkanlagen/standorte-mobilfunkanlagen_2056.json
-    # The file name to save
-    filename: # FILENAME=bakom-raw-$(date +'%Y-%m-%d').json
-    # The dir path to save the file
-    dir: # optional
-    # Commit message when update the file
-    commit_message: # optional, default is chore: update file [skip ci]
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set filename with current date
+        run: echo "FILENAME=bakom-raw-$(date +'%Y-%m-%d').json" >> $GITHUB_ENV
+
+      - name: Download BAKOM JSON
+        run: |
+          mkdir -p data
+          curl -sSL https://data.geo.admin.ch/ch.bakom.standorte-mobilfunkanlagen/standorte-mobilfunkanlagen/standorte-mobilfunkanlagen_2056.json -o "data/${FILENAME}"
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add data/${FILENAME}
+          git commit -m "chore: add BAKOM data ${{ env.FILENAME }} [skip ci]" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHAPI }}
