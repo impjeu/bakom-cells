@@ -1,0 +1,15 @@
+name: Download BAKOM Data
+  # You may pin to the exact commit or the version.
+  # uses: wow-actions/download-upload@bc8411c3dfcb62fee64632638e109283203abbda
+  uses: wow-actions/download-upload@v1.1.0
+  with:
+    # Your GitHub token for authentication.
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # The file url to download
+    url: https://data.geo.admin.ch/ch.bakom.standorte-mobilfunkanlagen/standorte-mobilfunkanlagen/standorte-mobilfunkanlagen_2056.json
+    # The file name to save
+    filename: # FILENAME=bakom-raw-$(date +'%Y-%m-%d').json
+    # The dir path to save the file
+    dir: # optional
+    # Commit message when update the file
+    commit_message: # optional, default is chore: update file [skip ci]
