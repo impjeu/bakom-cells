@@ -22,13 +22,13 @@ jobs:
         run: |
           mkdir -p data
           curl -sSL https://data.geo.admin.ch/ch.bakom.standorte-mobilfunkanlagen/standorte-mobilfunkanlagen/standorte-mobilfunkanlagen_2056.json -o "data/${FILENAME}"
-
       - name: Commit and push changes
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git add data/${FILENAME}
           git commit -m "chore: add BAKOM data ${{ env.FILENAME }} [skip ci]" || echo "No changes to commit"
+          git pull --rebase 
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GHAPI }}
